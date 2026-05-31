@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简约博客 · 打字编辑界面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #f7f9fc;
+            color: #2d3748;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* 头部标题 */
+        .blog-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .blog-header h1 {
+            font-size: 28px;
+            color: #2b6cb0;
+            margin-bottom: 8px;
+        }
+
+        .blog-header p {
+            color: #718096;
+        }
+
+        /* 主卡片容器 */
+        .blog-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            padding: 30px;
+        }
+
+        /* 打字输入框 */
+        .editor-box {
+            width: 100%;
+            min-height: 280px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px;
+            font-size: 16px;
+            resize: vertical;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .editor-box:focus {
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66,153,225,0.2);
+        }
+
+        /* 按钮区域 */
+        .btn-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        .publish-btn {
+            background-color: #4299e1;
+            color: white;
+        }
+
+        .publish-btn:hover {
+            background-color: #3182ce;
+        }
+
+        .clear-btn {
+            background-color: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .clear-btn:hover {
+            background-color: #cbd5e0;
+        }
+
+        /* 预览区域 */
+        .preview-title {
+            margin-top: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .preview-box {
+            margin-top: 15px;
+            min-height: 150px;
+            padding: 18px;
+            background: #f7fafc;
+            border-radius: 12px;
+            white-space: pre-wrap;
+        }
+
+        /* 打字光标动画 */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 18px;
+            background: #4299e1;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%,50% { opacity: 1; }
+            51%,100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="blog-header">
+            <h1>我的个人博客</h1>
+            <p>记录生活 · 随心写作</p>
+        </div>
+
+        <div class="blog-card">
+            <textarea class="editor-box" id="editor" placeholder="在这里开始打字写博客..."></textarea>
+
+            <div class="btn-group">
+                <button class="publish-btn" id="publishBtn">预览博客</button>
+                <button class="clear-btn" id="clearBtn">清空内容</button>
+            </div>
+
+            <div class="preview-title">博客预览</div>
+            <div class="preview-box" id="preview"></div>
+        </div>
+    </div>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+        const publishBtn = document.getElementById('publishBtn');
+        const clearBtn = document.getElementById('clearBtn');
+
+        // 实时预览
+        editor.addEventListener('input', () => {
+            preview.innerText = editor.value;
+        })
+
+        // 预览按钮
+        publishBtn.addEventListener('click', () => {
+            preview.innerText = editor.value || "暂无内容，请开始写作...";
+        })
+
+        // 清空
+        clearBtn.addEventListener('click', () => {
+            editor.value = '';
+            preview.innerText = '';
+        })
+    </script>
+</body>
+</html>
